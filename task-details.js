@@ -1,7 +1,5 @@
 "use strict";
-
 document.addEventListener("DOMContentLoaded", async () => {
-  // 🆔 Get task ID from URL
   const urlParams = new URLSearchParams(window.location.search);
   const taskId = urlParams.get("id");
 
@@ -12,7 +10,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   try {
-    // 🎯 Fetch task details
     const response = await fetch(
       `https://momentum.redberryinternship.ge/api/tasks/${taskId}`,
       {
@@ -33,7 +30,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       <div class="inner--frame-group">
         <div class="inner--instance-parent">
           <div class="inner--medium-parent importance--${task.priority.id}">
-            <img class="inner--medium-icon" alt="" src="${task.priority.icon}" />
+            <img class="inner--medium-icon" alt="" src="${
+              task.priority.icon
+            }" />
             <div class="inner--difficulty-label">${task.priority.name}</div>
           </div>
           <div class="inner--category-wrapper">
@@ -92,10 +91,14 @@ document.addEventListener("DOMContentLoaded", async () => {
               <div class="inner--info-div4">${task.department.name}</div>
             </div>
             <div class="inner--info-ellipse-parent">
-              <img class="inner--info-frame-child" alt="" src="${task.employee.avatar}" />
+              <img class="inner--info-frame-child" alt="" src="${
+                task.employee.avatar
+              }" />
 
               <div class="inner--info-frame">
-                <div class="inner--info-div5">${task.employee.name} ${task.employee.surname}</div>
+                <div class="inner--info-div5">${task.employee.name} ${
+      task.employee.surname
+    }</div>
               </div>
             </div>
           </div>
@@ -120,7 +123,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       </div>
     </div>
         `;
-        document.querySelector(".left--container").insertAdjacentHTML("beforeend", HTML);
+    document
+      .querySelector(".left--container")
+      .insertAdjacentHTML("beforeend", HTML);
     console.log(task);
   } catch (error) {
     console.error("Error fetching task details:", error);
@@ -128,3 +133,4 @@ document.addEventListener("DOMContentLoaded", async () => {
       "<p>Failed to load task details.</p>";
   }
 });
+

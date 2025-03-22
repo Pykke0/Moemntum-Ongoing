@@ -642,7 +642,7 @@ nav {
   display: flex;
   justify-content: end;
 }
-.cancel{
+.cancel {
   width: 10rem;
 }
 .modal--title {
@@ -676,13 +676,13 @@ input:focus {
   flex-direction: column;
   width: 48%;
 }
-.gap{
+.gap {
   padding-top: 1rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
-.buttons--container{
+.buttons--container {
   width: 100%;
   display: flex;
   justify-content: right;
@@ -727,11 +727,11 @@ input {
   transition: all 0.3s ease;
   position: relative;
   height: 6rem;
-  width: 100%
+  width: 100%;
 }
 
 .file-input input[type="file"] {
-  opacity: 0; 
+  opacity: 0;
   position: absolute;
   top: 0;
   left: 0;
@@ -769,6 +769,44 @@ input {
   margin: 0 auto;
   border-radius: 100%;
 }
-.modal--photo{
+.modal--photo {
   padding-bottom: 1rem;
 }
+.department--btn {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  background-color: #fff;
+  padding: 0.5rem;
+  border: 1px solid #dee2e6;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+/* Initial dropdown menu hidden */
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  border: 1px solid #ccc;
+  background-color: white;
+  width: 417.78px;
+  z-index: 1000;
+  font-size: 1rem;
+  transform: translateY(4.2rem);
+  overflow-y: scroll;
+  height: 10rem;
+}
+
+.dropdown-item {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background-color: #f0f0f0;
+}
+li {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+

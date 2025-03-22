@@ -62,7 +62,6 @@ function setupInputValidation(inputId, minMessageId, maxMessageId) {
 
   return validateInput;
 }
-
 // Get the validation functions
 const validateName = setupInputValidation(
   "name--input",
@@ -118,6 +117,16 @@ async function fetchData() {
       document
         .querySelector(".instance--parent")
         .insertAdjacentHTML("beforeend", HTML);
+
+      //Rendering departments for employee creation
+      const HTML2 = `
+                        <li class="dropdown-item" data-value="${department.id}">
+                  ${department.name}
+                </li>
+        `;
+      document
+        .querySelector(".department--container")
+        .insertAdjacentHTML("beforeend", HTML2);
     });
 
     // Render tasks
@@ -238,8 +247,8 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // ==================== Test ==================== //
+fetchData();
 window.addEventListener("DOMContentLoaded", () => {
-  fetchData();
   const filteredAddons = [];
 
   // STUPID PIECE OF SHIT CHECKING IF WE SHOULD FUCKING SORT IF OR NOT FUCK THIS SHIT MAN
@@ -365,6 +374,33 @@ window.addEventListener("DOMContentLoaded", () => {
       modal.style.display = "none";
     }
   };
+  // ==================== =================== //
+  const dropdownButton = document.querySelector(".dropdownButton");
+  const dropdownMenu = document.querySelector(".dropdownMenu");
+  const dropdownItems = document.querySelectorAll(".dropdown-item");
+
+  dropdownButton.addEventListener("click", () => {
+    dropdownMenu.style.display =
+      dropdownMenu.style.display === "block" ? "none" : "block";
+  });
+
+  dropdownItems.forEach((item) => {
+    console.log(item);
+
+    item.addEventListener("click", () => {
+      dropdownButton.innerHTML = `${item.innerHTML} <img src="./assets/Icon-arrow-down.svg" alt="">`;
+      dropdownMenu.style.display = "none";
+    });
+  });
+
+  window.addEventListener("click", (e) => {
+    if (
+      !dropdownButton.contains(e.target) &&
+      !dropdownMenu.contains(e.target)
+    ) {
+      dropdownMenu.style.display = "none";
+    }
+  });
 });
 const fileInput = document.getElementById("fileInput");
 const fileText = document.querySelector(".file-text");

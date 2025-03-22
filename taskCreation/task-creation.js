@@ -22,7 +22,6 @@ const closeBtn = document.getElementsByClassName("close-btn")[0];
 openModalBtn.onclick = function () {
   modal.style.display = "block";
 };
-modal.style.display = "block";
 
 closeBtn.onclick = function () {
   modal.style.display = "none";
@@ -35,16 +34,66 @@ window.onclick = function (event) {
 };
 const input = document.getElementById("fileInput");
 input.addEventListener("change", function (event) {
-  // Check if preventDefault() is necessary
-  // If not needed, let the default action occur
   const file = event.target.files[0];
   console.log(file);
 });
+// green n red validation shit idk
+function setupInputValidation(inputId, minMessageId, maxMessageId) {
+  const input = document.querySelector(`.${inputId}`);
+  const minMessage = document.querySelector(`.${minMessageId}`);
+  const maxMessage = document.querySelector(`.${maxMessageId}`);
 
-// Example where preventDefault is used only for certain events
-document
-  .getElementById("someForm")
-  .addEventListener("submit", function (event) {
-    event.preventDefault(); // This is okay for form submission, not for file input
-    console.log("Form submission intercepted");
-  });
+  function validateInput() {
+    const value = input.value;
+    const validText = value.replace(/[^a-zA-Zა-ჰ]/g, "");
+    input.value = validText;
+    const textLength = validText.length;
+
+    minMessage.style.color = textLength >= 2 ? "green" : "red";
+    maxMessage.style.color = textLength <= 255 ? "green" : "red";
+
+    return textLength >= 2 && textLength <= 255;
+  }
+
+  input.addEventListener("input", validateInput);
+
+  return validateInput;
+}
+const validateName = setupInputValidation(
+  "name--input",
+  "name--min",
+  "name--max"
+);
+const validateLastname = setupInputValidation(
+  "lastname--input",
+  "lastname--min",
+  "lastname--max"
+);
+const validateTitle = setupInputValidation(
+  "title--input",
+  "title--min",
+  "title--max"
+);
+const validateDescription = setupInputValidation(
+  "description",
+  "description--min",
+  "description--max"
+);
+const fileInput = document.getElementById("fileInput");
+const fileText = document.querySelector(".file-text");
+const filePreview = document.getElementById("filePreview");
+let temp = false;
+fileInput.addEventListener("change", function () {
+  const file = fileInput.files[0];
+  temp = true;
+  if (file) {
+    fileText.style.display = "none";
+    const imageUrl = URL.createObjectURL(file);
+
+    filePreview.src = imageUrl;
+    filePreview.style.display = "block";
+  } else {
+    fileText.style.display = "inline-block";
+    filePreview.style.display = "none";
+  }
+});

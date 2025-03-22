@@ -144,5 +144,10 @@ textarea:focus {
   padding-left: 0.5rem;
 }
 
+.gap {
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 
-  
