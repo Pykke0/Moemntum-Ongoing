@@ -380,8 +380,9 @@ window.addEventListener("DOMContentLoaded", () => {
   const dropdownItems = document.querySelectorAll(".dropdown-item");
 
   dropdownButton.addEventListener("click", () => {
-    dropdownMenu.style.display =
-      dropdownMenu.style.display === "block" ? "none" : "block";
+    dropdownItems.forEach((item) => {
+      console.log(item);
+    });
   });
 
   dropdownItems.forEach((item) => {
