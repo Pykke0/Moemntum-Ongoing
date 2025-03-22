@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script defer src="./task-creation.js"></script>
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="./task-creation.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
+    />
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+  </head>
+  <body>
+    <nav>
+      <div class="logo--parent">
+        <img src="../Logo.svg" id="logo" />
+      </div>
+      <div class="btns--parent">
+        <button class="btn btn--newEmployee" id="openModalBtn">
+          თანამშრომლის შექმნა
+        </button>
+        <button class="btn btn--purple btn--newWork">
+          შექმენი ახალი დავალება
+        </button>
+      </div>
+    </nav>
+    <!-- MODAL -->
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <div>
+          <span class="close-btn">&times;</span>
+          <h2>Modal Title</h2>
+          <p>This is some modal content!</p>
+        </div>
+      </div>
+    </div>
+    <!-- MODAL -->
+    <div class="title">შექმენი ახალი დავალება</div>
+    <div class="main--container">
+      <div class="title--container">
+        <div class="title--name">სათაური</div>
+        <div>
+          <input />
+        </div>
+        <div class="conditions--container">
+          <div class="conditions">მინიმუმ 2 სიმბოლო</div>
+          <div class="conditions">მაქსიმუმ 255 სიმბოლო</div>
+        </div>
+      </div>
+      <div class="description--container">
+        <div class="title--name">აღწერა</div>
+        <textarea class="description"></textarea>
+        <div class="conditions--container">
+          <div class="conditions">მინიმუმ 2 სიმბოლო</div>
+          <div class="conditions">მაქსიმუმ 255 სიმბოლო</div>
+        </div>
+      </div>
+      <div class="prio--status">
+        <div class="priority">
+          <div>
+            <p>პრიორიტეტი</p>
+          </div>
+          <button class="btn dropdown--button">
+            <div class="container">
+              <img src="" alt="" />
+              <p>საშუალო</p>
+            </div>
+            <img src="../assets/Icon-arrow-down.svg" />
+          </button>
+        </div>
+        <div class="status">
+          <div>სტატუსი</div>
+          <button class="btn dropdown--button">
+            დასაწყები
+            <img src="../assets/Icon-arrow-down.svg" alt="" />
+          </button>
+        </div>
+      </div>
+
+      <div class="department">
+        <div class="title--name">სტატუსი</div>
+        <button class="btn dropdown--button">
+          დასაწყები
+          <img src="../assets/Icon-arrow-down.svg" alt="" />
+        </button>
+      </div>
+      <div class="department">
+        <div class="title--name">პასუხისმგებელი თანამშრომელი</div>
+        <button class="btn dropdown--button">
+          დასაწყები
+          <img src="../assets/Icon-arrow-down.svg" alt="" />
+        </button>
+      </div>
+      <div class="department">
+        <div class="title--name">დედლაინი</div>
+        <div class="calendar--container">
+          <button class="btn" id="showCalendarBtn">
+            <img src="../assets/icon-calendar.svg" alt="" />
+          </button>
+          <input
+            type="text"
+            class="custom-input"
+            placeholder="DD/MM/YYYY"
+            id="selectedDate"
+            readonly
+          />
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

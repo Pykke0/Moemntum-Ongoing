@@ -1,0 +1,148 @@
+body {
+  font-family: "FiraGO", sans-serif;
+  padding: 0rem 7.5rem;
+  max-width: 1920px;
+  max-height: 1080px;
+}
+
+.title {
+  position: relative;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #212529;
+  text-align: left;
+  display: inline-block;
+  padding-bottom: 3rem;
+}
+
+.main--container {
+  max-width: 100%;
+  background-color: #fbf9ff;
+  position: relative;
+  border-radius: 4px;
+  background-color: rgba(251, 249, 255, 0.65);
+  border: 0.3px solid #ddd2ff;
+  box-sizing: border-box;
+  text-align: left;
+  font-size: 16px;
+  color: #343a40;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 2fr 1fr 0.5fr;
+  column-gap: 3rem;
+  row-gap: 2rem;
+  padding: 3rem;
+}
+.title--name {
+  position: relative;
+  font-size: 16px;
+  font-family: FiraGO;
+  color: #343a40;
+  text-align: left;
+  padding-bottom: 0.4rem;
+}
+.title--container {
+  display: flex;
+  flex-direction: column;
+}
+.conditions {
+  width: 100%;
+  position: relative;
+  font-size: 10px;
+  color: #6c757d;
+  text-align: left;
+  display: inline-block;
+}
+.conditions--container {
+  display: flex;
+  justify-content: start;
+  flex-direction: column;
+}
+
+.description--container {
+  grid-row: 2;
+}
+.description {
+  width: 100%;
+  position: relative;
+  border-radius: 5px;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  box-sizing: border-box;
+  resize: none;
+  padding: 1rem 1rem;
+  font-family: inherit;
+  height: 8rem;
+}
+textarea:focus {
+  outline: none;
+  border: 2px solid #bcc0c5;
+}
+.somethingidk {
+  display: flex;
+  gap: 0.2rem;
+}
+.prio--status {
+  grid-row: 3;
+  display: flex;
+  justify-content: space-between;
+}
+.priority {
+  width: 48%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.status {
+  width: 48%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.dropdown {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #dee2e6;
+}
+.container {
+  display: flex;
+  align-items: center;
+}
+.dropdown--button {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  background-color: #fff;
+  padding: 0.5rem;
+  border: 0.3px solid #ddd2ff;
+  border-radius: 5px;
+}
+#myInput {
+  background-image: url("../assets/icon-calendar.svg");
+  background-position: left center;
+  background-repeat: no-repeat;
+}
+.custom-input {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+}
+#custom-input:active {
+  border: none;
+}
+.calendar--container {
+  display: flex;
+  background-color: #fff;
+  border: 0.3px solid #ddd2ff;
+  border-radius: 5px;
+  gap: 0.5rem;
+  padding-left: 0.5rem;
+}
+
+
+  

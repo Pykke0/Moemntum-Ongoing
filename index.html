@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script defer src="./app.js"></script>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <nav>
+      <div class="logo--parent">
+        <img src=".//Logo.svg" id="logo" />
+      </div>
+      <div class="btns--parent">
+        <button class="btn btn--newEmployee" id="openModalBtn2">
+          თანამშრომლის შექმნა
+        </button>
+        <button class="btn btn--purple btn--newWork">
+          შექმენი ახალი დავალება
+        </button>
+      </div>
+    </nav>
+    <!-- MODAL -->
+    <div id="myModal2" class="modal">
+      <div class="modal-content">
+        <div class="modal--container">
+          <div class="x--button-1">
+            <button class="close-btn btn">
+              <img src="./assets/Icon-cancel.svg" id="exit" />
+            </button>
+          </div>
+          <div class="modal--title">თანამშრომლის დამატება</div>
+          <div class="name-lastname--container">
+            <div class="title--container">
+              <div class="title--name">სახელი*</div>
+              <div>
+                <input class="name--input"/>
+              </div>
+              <div class="conditions--container">
+                <div class="conditions name--min">მინიმუმ 2 სიმბოლო</div>
+                <div class="conditions name--max">მაქსიმუმ 255 სიმბოლო</div>
+              </div>
+            </div>
+            <div class="title--container">
+              <div class="title--name">გვარი*</div>
+              <div>
+                <input class="lastname--input"/>
+              </div>
+              <div class="conditions--container">
+                <div class="conditions lastname--min">მინიმუმ 2 სიმბოლო</div>
+                <div class="conditions lastname--max">მაქსიმუმ 255 სიმბოლო</div>
+              </div>
+            </div>
+          </div>
+          <div class="modal--photo">
+            <div class="title--name">გვარი*</div>
+            <label for="fileInput" class="file-input">
+              <input type="file" id="fileInput" accept="image/*" />
+              <span class="file-text">ატვირთე ფოტო</span>
+              <img id="filePreview" style="display: none" />
+            </label>
+          </div>
+          <div class="title--container">
+            <div class="title--name">დეპარტამენტი*</div>
+            <div>
+              <input />
+            </div>
+          </div>
+          <div class="buttons--container">
+            <div class="gap title--container">
+              <button class="btn btn--newEmployee cancel">გაუქმება</button>
+              <button class="btn btn--purple btn--newWork">
+                დაამატე თანამშრომელი
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- MODAL -->
+    <div id="work--text">დავალების გვერდი</div>
+    <div class="parent--container">
+      <div class="inner--container">
+        <div class="parent">
+          <button class="btn btn--filter" data-number="1">
+            <div class="div">დეპარტამენტი</div>
+            <img class="icon" alt="" src="./assets/Icon-arrow-down.svg" />
+          </button>
+        </div>
+        <div class="parent">
+          <button class="btn btn--filter" data-number="2">
+            <div class="div">პრიორიტეტი</div>
+            <img class="icon" alt="" src="./assets/Icon-arrow-down.svg" />
+          </button>
+        </div>
+        <div class="parent">
+          <button class="btn btn--filter" data-number="3">
+            <div class="div">თანამშრომელი</div>
+            <img class="icon" alt="" src="./assets/Icon-arrow-down.svg" />
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- დეპარტამენტი onclick -->
+    <div class="dropdown--parent display--none" data-pressed="1">
+      <div class="instance--parent"></div>
+      <div class="instance--wrapper">
+        <button class="button--wrapper btn btn--purple div">არჩევა</button>
+      </div>
+    </div>
+    <!-- პრიორიტეტები onclick -->
+    <div class="dropdown--parent display--none" data-pressed="2">
+      <div class="instance--parent priority"></div>
+      <div class="inner">
+        <button class="button--wrapper btn btn--purple div">არჩევა</button>
+      </div>
+    </div>
+    <!-- თანამშრომლები onclick -->
+    <div class="dropdown--parent display--none" data-pressed="3">
+      <div class="instance-parent"></div>
+      <div class="inner">
+        <button class="button--wrapper btn btn--purple div">არჩევა</button>
+      </div>
+    </div>
+    <!-- sorting variants -->
+    <div class="frame--parent">
+      <div class="filter--inner-parent">
+        <div class="all--options"></div>
+        <button class="clear--button btn display--none">
+          <div>გასუფთავება</div>
+        </button>
+      </div>
+    </div>
+    <div class="tasks--container"></div>
+  </body>
+</html>
