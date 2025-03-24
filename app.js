@@ -73,10 +73,43 @@ const validateLastname = setupInputValidation(
   "lastname--min",
   "lastname--max"
 );
+const personName = document.querySelector(".name--input");
+const lastName = document.querySelector(".lastname--input");
+const fileInput = document.getElementById("fileInput");
+let departmentId = document.getElementById("departments--list");
+departmentId.addEventListener("change", function () {
+  console.log(departmentId.value);
+});
 
-const testFunc = function () {
+const testFunc = async function () {
   if (validateName() && validateLastname() && temp) {
-    console.log(true);
+    const file = fileInput.files[0];
+    const formData = new FormData();
+    formData.append("name", personName.value);
+    formData.append("surname", lastName.value);
+    formData.append("avatar", file);
+    formData.append("department_id", departmentId.value);
+
+    try {
+      const response = await fetch(
+        "https://momentum.redberryinternship.ge/api/employees",
+        {
+          method: "POST",
+          body: formData,
+          headers: {
+            Accept: "application/json",
+            Authorization: "Bearer 9e6c6c65-71d3-42f0-8424-9dd49a4775e3",
+          },
+        }
+      );
+
+      if (!response.ok) throw new Error("Failed to upload");
+
+      const result = await response.json();
+      console.log("Success:", result);
+    } catch (error) {
+      console.error("Error:", error);
+    }
   } else {
     console.log(false);
   }
@@ -120,12 +153,10 @@ async function fetchData() {
 
       //Rendering departments for employee creation
       const HTML2 = `
-                        <li class="dropdown-item" data-value="${department.id}">
-                  ${department.name}
-                </li>
-        `;
+       <option value="${department.id}" class="departments--option">${department.name}</option>
+      `;
       document
-        .querySelector(".department--container")
+        .querySelector("#departments--list")
         .insertAdjacentHTML("beforeend", HTML2);
     });
 
@@ -375,35 +406,7 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   };
   // ==================== =================== //
-  const dropdownButton = document.querySelector(".dropdownButton");
-  const dropdownMenu = document.querySelector(".dropdownMenu");
-  const dropdownItems = document.querySelectorAll(".dropdown-item");
-
-  dropdownButton.addEventListener("click", () => {
-    dropdownItems.forEach((item) => {
-      console.log(item);
-    });
-  });
-
-  dropdownItems.forEach((item) => {
-    console.log(item);
-
-    item.addEventListener("click", () => {
-      dropdownButton.innerHTML = `${item.innerHTML} <img src="./assets/Icon-arrow-down.svg" alt="">`;
-      dropdownMenu.style.display = "none";
-    });
-  });
-
-  window.addEventListener("click", (e) => {
-    if (
-      !dropdownButton.contains(e.target) &&
-      !dropdownMenu.contains(e.target)
-    ) {
-      dropdownMenu.style.display = "none";
-    }
-  });
 });
-const fileInput = document.getElementById("fileInput");
 const fileText = document.querySelector(".file-text");
 const filePreview = document.getElementById("filePreview");
 let temp = false;
