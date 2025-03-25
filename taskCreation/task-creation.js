@@ -97,3 +97,26 @@ fileInput.addEventListener("change", function () {
     filePreview.style.display = "none";
   }
 });
+// DROPDOWN
+const selected = document.querySelector(".selected");
+const optionsContainer = document.querySelector(".options");
+const options = document.querySelectorAll(".option");
+
+selected.addEventListener("click", () => {
+  optionsContainer.style.display =
+    optionsContainer.style.display === "block" ? "none" : "block";
+});
+
+options.forEach((option) => {
+  option.addEventListener("click", () => {
+    selected.innerText = option.innerText;
+    optionsContainer.style.display = "none";
+  });
+});
+
+// Close dropdown when clicking outside
+document.addEventListener("click", (event) => {
+  if (!selected.parentElement.contains(event.target)) {
+    optionsContainer.style.display = "none";
+  }
+});

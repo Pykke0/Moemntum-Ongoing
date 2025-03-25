@@ -151,3 +151,35 @@ textarea:focus {
   justify-content: space-between;
 }
 
+.custom-select {
+  position: relative;
+  width: 100%;
+  cursor: pointer;
+  user-select: none;
+}
+
+.selected {
+  background: #ddd;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.options {
+  display: none;
+  position: absolute;
+  background: white;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.option {
+  padding: 10px;
+  cursor: pointer;
+  z-index: 100;
+}
+
+.option:hover {
+  background: #f0f0f0;
+}
