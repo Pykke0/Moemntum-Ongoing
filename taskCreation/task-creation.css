@@ -160,26 +160,43 @@ textarea:focus {
 
 .selected {
   background: #ddd;
-  padding: 10px;
   border-radius: 5px;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  background-color: #fff;
+  padding: 0.5rem;
+  border: 0.3px solid #ddd2ff;
 }
-
+.prio{
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
 .options {
   display: none;
   position: absolute;
-  background: white;
+  background-color: white;
   width: 100%;
   border: 1px solid #ccc;
   border-radius: 5px;
   overflow: hidden;
+  z-index: 10000;
 }
 
 .option {
   padding: 10px;
   cursor: pointer;
   z-index: 100;
+  display: flex;
+  gap: 0.3rem;
 }
 
 .option:hover {
   background: #f0f0f0;
+}
+.display--flex{
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
 }

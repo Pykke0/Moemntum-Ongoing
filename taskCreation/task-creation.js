@@ -99,25 +99,105 @@ fileInput.addEventListener("change", function () {
   }
 });
 // DROPDOWN
-const selected = document.querySelector(".selected");
-const optionsContainer = document.querySelector(".options");
-const options = document.querySelectorAll(".option");
+document
+  .querySelector(".main--container")
+  .addEventListener("click", function (e) {
+    e.preventDefault(); // hope this shit doesnt break whole thing
 
-selected.addEventListener("click", () => {
-  optionsContainer.style.display =
-    optionsContainer.style.display === "block" ? "none" : "block";
-});
+    const clicked = e.target.closest(".custom-select");
+    if (!clicked) return;
 
-options.forEach((option) => {
-  option.addEventListener("click", () => {
-    selected.innerText = option.innerText;
-    optionsContainer.style.display = "none";
+    const selectedText = clicked.querySelector(".selected--text");
+    const selectedPhoto = clicked.querySelector(".selected--photo");
+    const optionsContainer = clicked.querySelector(".options");
+
+    const isOpen = optionsContainer.style.display === "block";
+    document
+      .querySelectorAll(".options")
+      .forEach((opt) => (opt.style.display = "none"));
+    optionsContainer.style.display = isOpen ? "none" : "block";
+
+    const img = clicked.querySelector(".img");
+    const isDown = img.src.includes("Icon-arrow-down.svg");
+    img.src = isDown
+      ? "../assets/Icon-arrow-up.svg"
+      : "../assets/Icon-arrow-down.svg";
+
+    clicked.querySelectorAll(".option").forEach((option) => {
+      option.addEventListener("click", (event) => {
+        selectedText.textContent = option.textContent;
+        optionsContainer.style.display = "none";
+        if (selectedPhoto) selectedPhoto.src = option.querySelector("img").src;
+        event.stopPropagation();
+      });
+    });
   });
-});
 
-// Close dropdown when clicking outside
-document.addEventListener("click", (event) => {
-  if (!selected.parentElement.contains(event.target)) {
-    optionsContainer.style.display = "none";
+document.addEventListener("click", (e) => {
+  if (!e.target.closest(".custom-select")) {
+    document
+      .querySelectorAll(".options")
+      .forEach((opt) => (opt.style.display = "none"));
   }
 });
+
+const priority = document.querySelector(".priority");
+const statusesDIV = document.querySelector(".status");
+const departmentsDIV = document.querySelector(".department");
+
+// ========================= API FETCHING ========================== //
+async function fetchData() {
+  const baseURL = "https://momentum.redberryinternship.ge/api";
+  const headers = {
+    Accept: "application/json",
+    Authorization: "Bearer 9e6c6c65-71d3-42f0-8424-9dd49a4775e3",
+  };
+
+  try {
+    const [priorities, statuses, departments, employees] = await Promise.all([
+      fetch(`${baseURL}/priorities`, { headers }).then((res) => res.json()),
+      fetch(`${baseURL}/statuses`, { headers }).then((res) => res.json()),
+      fetch(`${baseURL}/departments`, { headers }).then((res) => res.json()),
+      fetch(`${baseURL}/employees`, { headers }).then((res) => res.json()),
+    ]);
+    // Priorities
+    priorities.forEach((prio) => {
+      const HTML = `
+              <div class="option" data-id="${prio.id}">
+                <img src="${prio.icon}" />
+                <p class="selected--text">${prio.name}</p>
+              </div>
+
+      `;
+      priority.querySelector(".options").insertAdjacentHTML("beforeend", HTML);
+    });
+
+    // Statuses
+    statuses.forEach((stat) => {
+      const HTML = `
+              <div class="option" data-id="${stat.id}">${stat.name}</div>
+      `;
+
+      statusesDIV
+        .querySelector(".options")
+        .insertAdjacentHTML("beforeend", HTML);
+    });
+
+    // Departments
+
+    departments.forEach((department) => {
+      const HTML = `
+              <div class="option" data-id="${department.id}">${department.name}</div>
+    `;
+
+      departmentsDIV
+        .querySelector(".options")
+        .insertAdjacentHTML("beforeend", HTML);
+        console.log(department);
+        
+    });
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
+fetchData();
