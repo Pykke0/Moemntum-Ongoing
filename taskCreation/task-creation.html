@@ -20,7 +20,7 @@
         <img src="../Logo.svg" id="logo" />
       </div>
       <div class="btns--parent">
-        <button class="btn btn--newEmployee" id="openModalBtn">
+        <button class="btn btn--newEmployee openModalBtn">
           თანამშრომლის შექმნა
         </button>
         <button class="btn btn--purple btn--newWork">
@@ -141,25 +141,24 @@
             <p class="selected--text">IT დეპარტამენტი</p>
             <img src="../assets/Icon-arrow-down.svg" class="img" />
           </div>
-          <div class="options">
-              <div class="option">რაცხა</div>
-              <div class="option">რაცხა 2</div>
-              <div class="option">მზად ტესტირებისთცის</div>
-              <div class="option">დასრულებული</div>
-          </div>
+          <div class="options"></div>
         </div>
       </div>
       <div class="department employee">
         <div class="title--name">პასუხისმგებელი თანამშრომელი*</div>
         <div class="custom-select">
           <div class="selected">
-            <p class="selected--text">IT დეპარტამენტი</p>
+            <div class="display--flex">
+              <img src="" class="selected--photo icon--img" />
+              <p class="selected--text">დაბალი</p>
+            </div>
             <img src="../assets/Icon-arrow-down.svg" class="img" />
           </div>
           <div class="options">
-            <div class="option">რაცხა 2</div>
-            <div class="option">მზად ტესტირებისთცის</div>
-            <div class="option">დასრულებული</div>
+            <div class="not-option openModalBtn">
+              <img src="../assets/Icon-plus.svg"/>
+              <p class="selected--text add--employee">დაამატე თანამშრომელი</p>
+            </div>
           </div>
         </div>
       </div>

@@ -16,12 +16,14 @@ $(document).ready(function () {
   });
 });
 const modal = document.getElementById("myModal");
-const openModalBtn = document.getElementById("openModalBtn");
+const openModalBtn = document.querySelectorAll(".openModalBtn");
 const closeBtn = document.getElementsByClassName("close-btn")[0];
+openModalBtn.forEach(btn => {
+  btn.onclick = function () {
+    modal.style.display = "block";
+  };
+})
 
-openModalBtn.onclick = function () {
-  modal.style.display = "block";
-};
 
 closeBtn.onclick = function () {
   modal.style.display = "none";
@@ -60,26 +62,8 @@ function setupInputValidation(inputId, minMessageId, maxMessageId) {
 
   return validateInput;
 }
-const validateName = setupInputValidation(
-  "name--input",
-  "name--min",
-  "name--max"
-);
-const validateLastname = setupInputValidation(
-  "lastname--input",
-  "lastname--min",
-  "lastname--max"
-);
-const validateTitle = setupInputValidation(
-  "title--input",
-  "title--min",
-  "title--max"
-);
-const validateDescription = setupInputValidation(
-  "description",
-  "description--min",
-  "description--max"
-);
+setupInputValidation("title--input", "title--min", "title--max");
+setupInputValidation("description", "description--min", "description--max");
 const fileInput = document.getElementById("fileInput");
 const fileText = document.querySelector(".file-text");
 const filePreview = document.getElementById("filePreview");
@@ -127,7 +111,11 @@ document
       option.addEventListener("click", (event) => {
         selectedText.textContent = option.textContent;
         optionsContainer.style.display = "none";
-        if (selectedPhoto) selectedPhoto.src = option.querySelector("img").src;
+        if (selectedPhoto){
+          selectedPhoto.src = option.querySelector("img").src;
+          console.log(true);
+          
+        }
         event.stopPropagation();
       });
     });
@@ -144,6 +132,7 @@ document.addEventListener("click", (e) => {
 const priority = document.querySelector(".priority");
 const statusesDIV = document.querySelector(".status");
 const departmentsDIV = document.querySelector(".department");
+const employeeDIV = document.querySelector(".employee");
 
 // ========================= API FETCHING ========================== //
 async function fetchData() {
@@ -193,8 +182,21 @@ async function fetchData() {
       departmentsDIV
         .querySelector(".options")
         .insertAdjacentHTML("beforeend", HTML);
-        console.log(department);
-        
+      // console.log(department);
+
+      // Employees
+    });
+    employees.forEach((employee) => {
+      const HTML = `
+            <div class="option" data-id="${employee.id}" data-department="${employee.department.id}">
+              <img src="${employee.avatar}" class="icon--img img" />
+              <p class="selected--text">${employee.name} ${employee.surname}</p>
+            </div>
+          `;
+      console.log(employee);
+      employeeDIV
+        .querySelector(".options")
+        .insertAdjacentHTML("beforeend", HTML);
     });
   } catch (error) {
     console.error("Error fetching data:", error);

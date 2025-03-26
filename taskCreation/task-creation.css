@@ -168,7 +168,7 @@ textarea:focus {
   padding: 0.5rem;
   border: 0.3px solid #ddd2ff;
 }
-.prio{
+.prio {
   display: flex;
   align-items: center;
   gap: 0.2rem;
@@ -183,20 +183,39 @@ textarea:focus {
   overflow: hidden;
   z-index: 10000;
 }
-
+.add--employee {
+  color: #8338ec;
+}
+.not-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 100;
+  align-items: center;
+}
 .option {
   padding: 10px;
   cursor: pointer;
   z-index: 100;
   display: flex;
   gap: 0.3rem;
+  align-items: center;
 }
 
 .option:hover {
   background: #f0f0f0;
 }
-.display--flex{
+.display--flex {
   display: flex;
   align-items: center;
   gap: 0.3rem;
+}
+.icon--img {
+  width: 30px;
+  position: relative;
+  border-radius: 50%;
+  height: 31px;
+  object-fit: cover;
 }
