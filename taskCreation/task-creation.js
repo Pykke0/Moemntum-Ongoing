@@ -45,7 +45,8 @@ function setupInputValidation(inputId, minMessageId, maxMessageId) {
 
   function validateInput() {
     const value = input.value;
-    const validText = value.replace(/[^a-zA-Zა-ჰ]/g, "");
+    const validText = value.replace(/[^a-zA-Zა-ჰ ]/g, "");
+
     input.value = validText;
     const textLength = validText.length;
 
