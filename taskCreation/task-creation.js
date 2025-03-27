@@ -18,12 +18,11 @@ $(document).ready(function () {
 const modal = document.getElementById("myModal");
 const openModalBtn = document.querySelectorAll(".openModalBtn");
 const closeBtn = document.getElementsByClassName("close-btn")[0];
-openModalBtn.forEach(btn => {
+openModalBtn.forEach((btn) => {
   btn.onclick = function () {
     modal.style.display = "block";
   };
-})
-
+});
 
 closeBtn.onclick = function () {
   modal.style.display = "none";
@@ -64,6 +63,8 @@ function setupInputValidation(inputId, minMessageId, maxMessageId) {
 }
 setupInputValidation("title--input", "title--min", "title--max");
 setupInputValidation("description", "description--min", "description--max");
+setupInputValidation("name--input", "name--min", "name--max");
+setupInputValidation("lastname--input", "lastname--min", "lastname--max");
 const fileInput = document.getElementById("fileInput");
 const fileText = document.querySelector(".file-text");
 const filePreview = document.getElementById("filePreview");
@@ -110,11 +111,11 @@ document
     clicked.querySelectorAll(".option").forEach((option) => {
       option.addEventListener("click", (event) => {
         selectedText.textContent = option.textContent;
+        selectedText.setAttribute("data-id", option.getAttribute("data-id"));
         optionsContainer.style.display = "none";
-        if (selectedPhoto){
+        if (selectedPhoto) {
           selectedPhoto.src = option.querySelector("img").src;
           console.log(true);
-          
         }
         event.stopPropagation();
       });
@@ -193,7 +194,7 @@ async function fetchData() {
               <p class="selected--text">${employee.name} ${employee.surname}</p>
             </div>
           `;
-      console.log(employee);
+      // console.log(employee);
       employeeDIV
         .querySelector(".options")
         .insertAdjacentHTML("beforeend", HTML);
@@ -202,4 +203,24 @@ async function fetchData() {
     console.error("Error fetching data:", error);
   }
 }
-fetchData();
+// FILTERING THINGS IDK LIKE EMPLOYEES BASED ON WEHRE THEy WORK OR SMTH
+const departmentContainer = document.querySelector(".department");
+document.addEventListener("DOMContentLoaded", async () => {
+  await fetchData();
+
+  const allEmployeeOptions = employeeDIV.querySelectorAll(".option");
+
+  departmentContainer.addEventListener("click", (e) => {
+    const selectedDepartmentId = departmentContainer
+      .querySelector(".selected--text")
+      .getAttribute("data-id");
+
+    allEmployeeOptions.forEach((option) => {
+      if (option.getAttribute("data-department") === selectedDepartmentId) {
+        option.style.display = "flex";
+      } else {
+        option.style.display = "none";
+      }
+    });
+  });
+});
