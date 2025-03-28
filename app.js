@@ -77,10 +77,6 @@ const personName = document.querySelector(".name--input");
 const lastName = document.querySelector(".lastname--input");
 const fileInput = document.getElementById("fileInput");
 let departmentId = document.getElementById("departments--list");
-departmentId.addEventListener("change", function () {
-  console.log(departmentId.value);
-});
-
 const testFunc = async function () {
   if (validateName() && validateLastname() && temp) {
     const file = fileInput.files[0];

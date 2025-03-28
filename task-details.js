@@ -18,12 +18,21 @@ document.addEventListener("DOMContentLoaded", async () => {
         },
       }
     );
+    const departments = await fetch(
+      `https://momentum.redberryinternship.ge/api/departments`,
+      {
+        headers: {
+          Authorization: "Bearer 9e6c6c65-71d3-42f0-8424-9dd49a4775e3",
+        },
+      }
+    );
 
     if (!response.ok) {
       throw new Error(`HTTP Error: ${response.status}`);
     }
 
     const task = await response.json();
+    const department = await departments.json();
 
     const HTML = `
             <div class="inner--frame-parent">
@@ -127,10 +136,36 @@ document.addEventListener("DOMContentLoaded", async () => {
       .querySelector(".left--container")
       .insertAdjacentHTML("beforeend", HTML);
     console.log(task);
+    // DEPARTMENTs ==========================
+    department.forEach((dep) => {
+      const HTML2 = `
+      <option value="${dep.id}" class="departments--option">${dep.name}</option>
+      `;
+      document
+        .querySelector("#departments--list")
+        .insertAdjacentHTML("beforeend", HTML2);
+    });
   } catch (error) {
     console.error("Error fetching task details:", error);
     document.getElementById("task-details").innerHTML =
       "<p>Failed to load task details.</p>";
   }
 });
+// Modal thingies
+const modal = document.getElementById("myModal2");
+const openModalBtn = document.getElementById("openModalBtn");
+const closeBtn = document.getElementsByClassName("close-btn")[0];
 
+openModalBtn.onclick = function () {
+  modal.style.display = "block";
+};
+
+closeBtn.onclick = function () {
+  modal.style.display = "none";
+};
+
+window.onclick = function (event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+};

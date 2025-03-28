@@ -14,12 +14,69 @@
         <img src=".//Logo.svg" id="logo" />
       </div>
       <div class="btns--parent">
-        <button class="btn btn--newEmployee">თანამშრომლის შექმნა</button>
+        <button class="btn btn--newEmployee" id="openModalBtn">თანამშრომლის შექმნა</button>
         <button class="btn btn--purple btn--newWork">
           შექმენი ახალი დავალება
         </button>
       </div>
     </nav>
+    <!-- MODAL -->
+    <div id="myModal2" class="modal">
+      <div class="modal-content">
+        <div class="modal--container">
+          <div class="x--button-1">
+            <button class="close-btn btn">
+              <img src="./assets/Icon-cancel.svg" id="exit" />
+            </button>
+          </div>
+          <div class="modal--title">თანამშრომლის დამატება</div>
+          <div class="name-lastname--container">
+            <div class="title--container">
+              <div class="title--name">სახელი*</div>
+              <div>
+                <input class="name--input" />
+              </div>
+              <div class="conditions--container">
+                <div class="conditions name--min">მინიმუმ 2 სიმბოლო</div>
+                <div class="conditions name--max">მაქსიმუმ 255 სიმბოლო</div>
+              </div>
+            </div>
+            <div class="title--container">
+              <div class="title--name">გვარი*</div>
+              <div>
+                <input class="lastname--input" />
+              </div>
+              <div class="conditions--container">
+                <div class="conditions lastname--min">მინიმუმ 2 სიმბოლო</div>
+                <div class="conditions lastname--max">მაქსიმუმ 255 სიმბოლო</div>
+              </div>
+            </div>
+          </div>
+          <div class="modal--photo">
+            <div class="title--name">გვარი*</div>
+            <label for="fileInput" class="file-input">
+              <input type="file" id="fileInput" accept="image/*" />
+              <span class="file-text">ატვირთე ფოტო</span>
+              <img id="filePreview" style="display: none" />
+            </label>
+          </div>
+          <div class="title--container">
+            <div class="title--name">დეპარტამენტი*</div>
+
+            <select name="departments" id="departments--list"></select>
+          </div>
+          <div class="buttons--container">
+            <div class="gap title--container">
+              <button class="btn btn--newEmployee cancel">გაუქმება</button>
+              <button class="btn btn--purple btn--newWork">
+                დაამატე თანამშრომელი
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- MODAL -->  
     <div class="container">
       <div class="left--container"></div>
       <div class="right--container">

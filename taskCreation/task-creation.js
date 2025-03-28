@@ -1,5 +1,15 @@
 "use strict";
+const employeeDiv = document.querySelector(".employee--thingy");
 
+const employeeValidation = function () {
+  if (!selectedDepartment.innerHTML) {
+    employeeDiv.style.pointerEvents = "none";
+    employeeDiv.style.opacity = "0.5";
+  } else {
+    employeeDiv.style.pointerEvents = "auto";
+    employeeDiv.style.opacity = "1";
+  }
+};
 $(document).ready(function () {
   $("#selectedDate").datepicker({
     showButtonPanel: true,
@@ -95,13 +105,11 @@ document
     const selectedText = clicked.querySelector(".selected--text");
     const selectedPhoto = clicked.querySelector(".selected--photo");
     const optionsContainer = clicked.querySelector(".options");
-
     const isOpen = optionsContainer.style.display === "block";
     document
       .querySelectorAll(".options")
       .forEach((opt) => (opt.style.display = "none"));
     optionsContainer.style.display = isOpen ? "none" : "block";
-
     const img = clicked.querySelector(".img");
     const isDown = img.src.includes("Icon-arrow-down.svg");
     img.src = isDown
@@ -118,6 +126,7 @@ document
           console.log(true);
         }
         event.stopPropagation();
+        employeeValidation();
       });
     });
   });
@@ -223,4 +232,11 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     });
   });
+
+  employeeValidation();
 });
+const selectedDepartment = document.querySelector(".selected--department");
+
+// const test = function(){
+//   console.log(selectedDepartment.innerHTML);
+// }
