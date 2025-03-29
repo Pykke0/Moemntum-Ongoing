@@ -155,7 +155,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 const modal = document.getElementById("myModal2");
 const openModalBtn = document.getElementById("openModalBtn");
 const closeBtn = document.getElementsByClassName("close-btn")[0];
-
 openModalBtn.onclick = function () {
   modal.style.display = "block";
 };
