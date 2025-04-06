@@ -4,22 +4,18 @@ const departementContainer = document.querySelector(".instance--parent");
 const dropdowns = document.querySelectorAll(".dropdown--parent");
 const allButtons = document.querySelectorAll(".btn--filter");
 
-document
-  .querySelector(".inner--container")
-  .addEventListener("click", function (e) {
-    e.preventDefault();
-    const clicked = e.target.closest(".btn");
+document.querySelector(".inner--container").addEventListener("click", function (e) {
+  e.preventDefault();
+  const clicked = e.target.closest(".btn");
 
-    if (!clicked) return;
+  if (!clicked) return;
 
-    const dataNumber = clicked.getAttribute("data-number");
-    const department = document.querySelector(
-      `.dropdown--parent[data-pressed="${dataNumber}"]`
-    );
-    clicked.classList.contains("active")
-      ? removeAllSelected()
-      : addAllSelected(clicked, department);
-  });
+  const dataNumber = clicked.getAttribute("data-number");
+  const department = document.querySelector(`.dropdown--parent[data-pressed="${dataNumber}"]`);
+  clicked.classList.contains("active")
+    ? removeAllSelected()
+    : addAllSelected(clicked, department);
+});
 
 // ==================== Functions ==================== //
 const removeAllSelected = () => {
@@ -62,17 +58,9 @@ function setupInputValidation(inputId, minMessageId, maxMessageId) {
 
   return validateInput;
 }
-// Get the validation functions
-const validateName = setupInputValidation(
-  "name--input",
-  "name--min",
-  "name--max"
-);
-const validateLastname = setupInputValidation(
-  "lastname--input",
-  "lastname--min",
-  "lastname--max"
-);
+
+const validateName = setupInputValidation("name--input", "name--min", "name--max");
+const validateLastname = setupInputValidation("lastname--input", "lastname--min", "lastname--max");
 const personName = document.querySelector(".name--input");
 const lastName = document.querySelector(".lastname--input");
 const fileInput = document.getElementById("fileInput");
@@ -103,6 +91,9 @@ const testFunc = async function () {
 
       const result = await response.json();
       console.log("Success:", result);
+      console.log(document.querySelector(".name--input").value);
+
+      document.querySelector(".lastname--input").value = "";
     } catch (error) {
       console.error("Error:", error);
     }
@@ -110,6 +101,12 @@ const testFunc = async function () {
     console.log(false);
   }
 };
+
+document.getElementById("addEmployeeBtn").addEventListener("click", () => {
+  console.log(document.querySelector("name--input").value);
+  document.querySelector("lastname--input").value = "";
+  testFunc();
+});
 
 setupInputValidation("name--input", "name--min", "name--max");
 setupInputValidation("lastname--input", "lastname--min", "lastname--max");
@@ -143,17 +140,12 @@ async function fetchData() {
             <div class="button">${department.name}</div>
           </div>
         </div>`;
-      document
-        .querySelector(".instance--parent")
-        .insertAdjacentHTML("beforeend", HTML);
+      document.querySelector(".instance--parent").insertAdjacentHTML("beforeend", HTML);
 
-      //Rendering departments for employee creation
       const HTML2 = `
        <option value="${department.id}" class="departments--option">${department.name}</option>
       `;
-      document
-        .querySelector("#departments--list")
-        .insertAdjacentHTML("beforeend", HTML2);
+      document.querySelector("#departments--list").insertAdjacentHTML("beforeend", HTML2);
     });
 
     // Render tasks
@@ -189,7 +181,6 @@ async function fetchData() {
           </div>
           </div>
           </button>`;
-        // console.log(task);
 
         if (task.status.name === "დასაწყები") {
           document.querySelector(".__1").insertAdjacentHTML("beforeend", HTML);
@@ -198,10 +189,8 @@ async function fetchData() {
         } else if (task.status.name == "მზად ტესტირებისთვის") {
           document.querySelector(".__3").insertAdjacentHTML("beforeend", HTML);
         } else if (task.status.name == "დასრულებული") {
-          document.querySelector(".__3").insertAdjacentHTML("beforeend", HTML);
+          document.querySelector(".__4").insertAdjacentHTML("beforeend", HTML);
         }
-
-        // console.log(task.status.name);
       });
     }, 100);
 
@@ -219,10 +208,7 @@ async function fetchData() {
             </div>
           </div>
         </div>`;
-      document
-        .querySelector(".instance-parent")
-        .insertAdjacentHTML("beforeend", HTML);
-      // console.log(person);
+      document.querySelector(".instance-parent").insertAdjacentHTML("beforeend", HTML);
     });
 
     // Render statuses
@@ -234,9 +220,7 @@ async function fetchData() {
           </div>
           <div class="tasks--grid __${status.id}"></div>
         </div>`;
-      document
-        .querySelector(".tasks--container")
-        .insertAdjacentHTML("beforeend", HTML);
+      document.querySelector(".tasks--container").insertAdjacentHTML("beforeend", HTML);
     });
 
     // Render priorities
@@ -256,6 +240,8 @@ async function fetchData() {
     console.error("Error fetching data:", error);
   }
 }
+
+// ==================== Event Listeners ==================== //
 document.addEventListener("DOMContentLoaded", () => {
   document.body.addEventListener("click", (event) => {
     const button = event.target.closest(".task--container");
@@ -323,31 +309,27 @@ window.addEventListener("DOMContentLoaded", () => {
       filteredAddons.splice(
         filteredAddons.indexOf(
           img.closest(".check-parent").querySelector(".button").textContent
-        ), // BUG HERE
+        ),
         1
       );
     }
   });
 
-  document
-    .querySelector(".clear--button")
-    .addEventListener("click", function () {
-      document.querySelectorAll(".option--parent").forEach((option) => {
-        option.remove();
-      });
-      this.classList.add("display--none");
-      filteredAddons.length = 0;
-      document.querySelectorAll(".vector-icon").forEach((check) => {
-        check.classList.remove("checked");
-      });
+  document.querySelector(".clear--button").addEventListener("click", function () {
+    document.querySelectorAll(".option--parent").forEach((option) => {
+      option.remove();
     });
+    this.classList.add("display--none");
+    filteredAddons.length = 0;
+    document.querySelectorAll(".vector-icon").forEach((check) => {
+      check.classList.remove("checked");
+    });
+  });
 
   // Filtering Yet again
   document.addEventListener("click", function (event) {
     if (event.target.classList.contains("btn--purple")) {
-      // here
       updateFiltering();
-      // event.target.closest(".dropdown--parent").classList.add("display--none");
     }
   });
 
@@ -363,24 +345,14 @@ window.addEventListener("DOMContentLoaded", () => {
               <img class="x--icon" alt="" src="./assets/icon-x.svg" />
             </button>
           </div>`;
-      document
-        .querySelector(".all--options")
-        .insertAdjacentHTML("beforeend", HTML);
-
-      console.log(addon.getAttribute);
+      document.querySelector(".all--options").insertAdjacentHTML("beforeend", HTML);
     });
+    
     if (filteredAddons.length > 0) {
-      document
-        .querySelector(".clear--button")
-        .classList.remove("display--none");
+      document.querySelector(".clear--button").classList.remove("display--none");
     } else {
       document.querySelector(".clear--button").classList.add("display--none");
     }
-
-    document.querySelectorAll(".task--container").forEach((task) => {
-      // console.log(task.querySelector(".frame-child").getAttribute("data-id"));
-      // console.log(filteredAddons);
-    });
   };
 
   // ============= MODAL MANIPULATION =============== //
@@ -401,8 +373,8 @@ window.addEventListener("DOMContentLoaded", () => {
       modal.style.display = "none";
     }
   };
-  // ==================== =================== //
 });
+
 const fileText = document.querySelector(".file-text");
 const filePreview = document.getElementById("filePreview");
 let temp = false;

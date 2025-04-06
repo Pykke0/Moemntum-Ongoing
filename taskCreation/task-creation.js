@@ -25,7 +25,7 @@ $(document).ready(function () {
     console.log("Selected Date: " + selectedDate);
   });
 });
-const modal = document.getElementById("myModal");
+const modal = document.getElementById("myModal2");
 const openModalBtn = document.querySelectorAll(".openModalBtn");
 const closeBtn = document.getElementsByClassName("close-btn")[0];
 openModalBtn.forEach((btn) => {
@@ -46,7 +46,7 @@ window.onclick = function (event) {
 const input = document.getElementById("fileInput");
 input.addEventListener("change", function (event) {
   const file = event.target.files[0];
-  console.log(file);
+  // console.log(file);
 });
 // green n red validation shit idk
 function setupInputValidation(inputId, minMessageId, maxMessageId) {
@@ -144,6 +144,61 @@ const statusesDIV = document.querySelector(".status");
 const departmentsDIV = document.querySelector(".department");
 const employeeDIV = document.querySelector(".employee");
 
+// ========================= SENDING API  ========================== //
+
+const validateName = setupInputValidation(
+  "name--input",
+  "name--min",
+  "name--max"
+);
+const validateLastname = setupInputValidation(
+  "lastname--input",
+  "lastname--min",
+  "lastname--max"
+);
+const personName = document.querySelector(".name--input");
+const lastName = document.querySelector(".lastname--input");
+let departmentId = document.getElementById("departments--list");
+const testFunc = async function () {
+  if (validateName() && validateLastname() && temp) {
+    const file = fileInput.files[0];
+    const formData = new FormData();
+    formData.append("name", personName.value);
+    formData.append("surname", lastName.value);
+    formData.append("avatar", file);
+    formData.append("department_id", departmentId.value);
+
+    try {
+      const response = await fetch(
+        "https://momentum.redberryinternship.ge/api/employees",
+        {
+          method: "POST",
+          body: formData,
+          headers: {
+            Accept: "application/json",
+            Authorization: "Bearer 9e6c6c65-71d3-42f0-8424-9dd49a4775e3",
+          },
+        }
+      );
+
+      if (!response.ok) throw new Error("Failed to upload");
+
+      const result = await response.json();
+      console.log("Success:", result);
+
+      document.querySelector(".name--input").value = "";
+      document.querySelector(".lastname--input").value = "";
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  } else {
+    console.log(false);
+  }
+};
+document.getElementById("addEmployeeBtn").addEventListener("click", () => {
+  testFunc();
+});
+
 // ========================= API FETCHING ========================== //
 async function fetchData() {
   const baseURL = "https://momentum.redberryinternship.ge/api";
@@ -194,8 +249,14 @@ async function fetchData() {
         .insertAdjacentHTML("beforeend", HTML);
       // console.log(department);
 
-      // Employees
+      const HTML2 = `
+      <option value="${department.id}" class="departments--option">${department.name}</option>
+     `;
+      document
+        .querySelector("#departments--list")
+        .insertAdjacentHTML("beforeend", HTML2);
     });
+    // Employees
     employees.forEach((employee) => {
       const HTML = `
             <div class="option" data-id="${employee.id}" data-department="${employee.department.id}">
@@ -219,7 +280,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const allEmployeeOptions = employeeDIV.querySelectorAll(".option");
 
-  departmentContainer.addEventListener("click", (e) => {
+  departmentContainer.addEventListener("click", () => {
     const selectedDepartmentId = departmentContainer
       .querySelector(".selected--text")
       .getAttribute("data-id");

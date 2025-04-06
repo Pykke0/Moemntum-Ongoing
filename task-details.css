@@ -147,6 +147,7 @@ body {
   justify-content: flex-start;
   padding: 14px;
   gap: 10px;
+  cursor: pointer;
 }
 .inner--info-frame-wrapper {
   height: 76px;
@@ -287,9 +288,37 @@ body {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
   font-size: 14px;
   color: #0d0f10;
+}
+.options {
+  display: none;
+  position: absolute;
+  background-color: white;
+  width: 261px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+  z-index: 10000;
+  top: 8rem;
+}
+.option {
+  padding: 10px;
+  cursor: pointer;
+  z-index: 100;
+  width: 261px;
+  border-radius: 5px;
+  background-color: #fff;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 14px;
+  gap: 10px;
+}
+.option:hover {
+  background-color: #f0f0f0;
 }
 .inner--info-frame-parent3 {
   align-self: stretch;

@@ -29,7 +29,7 @@
       </div>
     </nav>
     <!-- MODAL -->
-    <div id="myModal" class="modal">
+    <div id="myModal2" class="modal">
       <div class="modal-content">
         <div class="modal--container">
           <div class="x--button-1">
@@ -70,14 +70,13 @@
           </div>
           <div class="title--container">
             <div class="title--name">დეპარტამენტი*</div>
-            <div>
-              <input />
-            </div>
+
+            <select name="departments" id="departments--list"></select>
           </div>
           <div class="buttons--container">
             <div class="gap title--container">
               <button class="btn btn--newEmployee cancel">გაუქმება</button>
-              <button class="btn btn--purple btn--newWork">
+              <button class="btn btn--purple btn--newWork" id="addEmployeeBtn">
                 დაამატე თანამშრომელი
               </button>
             </div>
@@ -156,7 +155,7 @@
           </div>
           <div class="options">
             <div class="not-option openModalBtn">
-              <img src="../assets/Icon-plus.svg"/>
+              <img src="../assets/Icon-plus.svg" />
               <p class="selected--text add--employee">დაამატე თანამშრომელი</p>
             </div>
           </div>
