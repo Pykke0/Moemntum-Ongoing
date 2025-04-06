@@ -4,18 +4,22 @@ const departementContainer = document.querySelector(".instance--parent");
 const dropdowns = document.querySelectorAll(".dropdown--parent");
 const allButtons = document.querySelectorAll(".btn--filter");
 
-document.querySelector(".inner--container").addEventListener("click", function (e) {
-  e.preventDefault();
-  const clicked = e.target.closest(".btn");
+document
+  .querySelector(".inner--container")
+  .addEventListener("click", function (e) {
+    e.preventDefault();
+    const clicked = e.target.closest(".btn");
 
-  if (!clicked) return;
+    if (!clicked) return;
 
-  const dataNumber = clicked.getAttribute("data-number");
-  const department = document.querySelector(`.dropdown--parent[data-pressed="${dataNumber}"]`);
-  clicked.classList.contains("active")
-    ? removeAllSelected()
-    : addAllSelected(clicked, department);
-});
+    const dataNumber = clicked.getAttribute("data-number");
+    const department = document.querySelector(
+      `.dropdown--parent[data-pressed="${dataNumber}"]`
+    );
+    clicked.classList.contains("active")
+      ? removeAllSelected()
+      : addAllSelected(clicked, department);
+  });
 
 // ==================== Functions ==================== //
 const removeAllSelected = () => {
@@ -59,8 +63,16 @@ function setupInputValidation(inputId, minMessageId, maxMessageId) {
   return validateInput;
 }
 
-const validateName = setupInputValidation("name--input", "name--min", "name--max");
-const validateLastname = setupInputValidation("lastname--input", "lastname--min", "lastname--max");
+const validateName = setupInputValidation(
+  "name--input",
+  "name--min",
+  "name--max"
+);
+const validateLastname = setupInputValidation(
+  "lastname--input",
+  "lastname--min",
+  "lastname--max"
+);
 const personName = document.querySelector(".name--input");
 const lastName = document.querySelector(".lastname--input");
 const fileInput = document.getElementById("fileInput");
@@ -140,12 +152,16 @@ async function fetchData() {
             <div class="button">${department.name}</div>
           </div>
         </div>`;
-      document.querySelector(".instance--parent").insertAdjacentHTML("beforeend", HTML);
+      document
+        .querySelector(".instance--parent")
+        .insertAdjacentHTML("beforeend", HTML);
 
       const HTML2 = `
        <option value="${department.id}" class="departments--option">${department.name}</option>
       `;
-      document.querySelector("#departments--list").insertAdjacentHTML("beforeend", HTML2);
+      document
+        .querySelector("#departments--list")
+        .insertAdjacentHTML("beforeend", HTML2);
     });
 
     // Render tasks
@@ -208,7 +224,9 @@ async function fetchData() {
             </div>
           </div>
         </div>`;
-      document.querySelector(".instance-parent").insertAdjacentHTML("beforeend", HTML);
+      document
+        .querySelector(".instance-parent")
+        .insertAdjacentHTML("beforeend", HTML);
     });
 
     // Render statuses
@@ -220,7 +238,9 @@ async function fetchData() {
           </div>
           <div class="tasks--grid __${status.id}"></div>
         </div>`;
-      document.querySelector(".tasks--container").insertAdjacentHTML("beforeend", HTML);
+      document
+        .querySelector(".tasks--container")
+        .insertAdjacentHTML("beforeend", HTML);
     });
 
     // Render priorities
@@ -315,16 +335,18 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  document.querySelector(".clear--button").addEventListener("click", function () {
-    document.querySelectorAll(".option--parent").forEach((option) => {
-      option.remove();
+  document
+    .querySelector(".clear--button")
+    .addEventListener("click", function () {
+      document.querySelectorAll(".option--parent").forEach((option) => {
+        option.remove();
+      });
+      this.classList.add("display--none");
+      filteredAddons.length = 0;
+      document.querySelectorAll(".vector-icon").forEach((check) => {
+        check.classList.remove("checked");
+      });
     });
-    this.classList.add("display--none");
-    filteredAddons.length = 0;
-    document.querySelectorAll(".vector-icon").forEach((check) => {
-      check.classList.remove("checked");
-    });
-  });
 
   // Filtering Yet again
   document.addEventListener("click", function (event) {
@@ -345,11 +367,15 @@ window.addEventListener("DOMContentLoaded", () => {
               <img class="x--icon" alt="" src="./assets/icon-x.svg" />
             </button>
           </div>`;
-      document.querySelector(".all--options").insertAdjacentHTML("beforeend", HTML);
+      document
+        .querySelector(".all--options")
+        .insertAdjacentHTML("beforeend", HTML);
     });
-    
+
     if (filteredAddons.length > 0) {
-      document.querySelector(".clear--button").classList.remove("display--none");
+      document
+        .querySelector(".clear--button")
+        .classList.remove("display--none");
     } else {
       document.querySelector(".clear--button").classList.add("display--none");
     }

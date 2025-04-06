@@ -1,6 +1,6 @@
 "use strict";
-const employeeDiv = document.querySelector(".employee--thingy");
 
+const employeeDiv = document.querySelector(".employee--thingy");
 const employeeValidation = function () {
   if (!selectedDepartment.innerHTML) {
     employeeDiv.style.pointerEvents = "none";
@@ -71,10 +71,7 @@ function setupInputValidation(inputId, minMessageId, maxMessageId) {
 
   return validateInput;
 }
-setupInputValidation("title--input", "title--min", "title--max");
-setupInputValidation("description", "description--min", "description--max");
-setupInputValidation("name--input", "name--min", "name--max");
-setupInputValidation("lastname--input", "lastname--min", "lastname--max");
+
 const fileInput = document.getElementById("fileInput");
 const fileText = document.querySelector(".file-text");
 const filePreview = document.getElementById("filePreview");
@@ -97,7 +94,7 @@ fileInput.addEventListener("change", function () {
 document
   .querySelector(".main--container")
   .addEventListener("click", function (e) {
-    e.preventDefault(); // hope this shit doesnt break whole thing
+    e.preventDefault(); 
 
     const clicked = e.target.closest(".custom-select");
     if (!clicked) return;
@@ -298,6 +295,47 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 const selectedDepartment = document.querySelector(".selected--department");
 
-// const test = function(){
-//   console.log(selectedDepartment.innerHTML);
-// }
+// ========================== Valdiating everything to be sent to api ========================= //
+const validateTitle = setupInputValidation(
+  "title--input",
+  "title--min",
+  "title--max"
+);
+const validateDescription = setupInputValidation(
+  "description",
+  "description--min",
+  "description--max"
+);
+const theButton = document.querySelector(".createTask");
+theButton.addEventListener("click", () => {
+  const selectedDate = document.querySelector("#selectedDate").value;
+  const selectedEmployeeId =
+    employeeDIV.querySelector(".selected--text").dataset.id;
+  const selectedPriorityId =
+    priority.querySelector(".selected--text").dataset.id;
+  const selectedStatusId =
+    statusesDIV.querySelector(".selected--text").dataset.id;
+  const selectedTitle = document.querySelector(".title--input").value;
+  const selectedDescription = document.querySelector(".description").value;
+
+  if (
+    validateTitle() &&
+    validateDescription() &&
+    selectedDate &&
+    selectedEmployeeId &&
+    selectedPriorityId &&
+    selectedStatusId
+  ) {
+    console.log("All validations passed! Ready to send data.");
+    console.log(`
+    name: ${selectedTitle}  
+    description: ${selectedDescription}
+    due_date: ${selectedDate}
+    status_id: ${selectedStatusId}
+    employee_id: ${selectedEmployeeId}
+    priority_id: ${selectedPriorityId}
+      `);
+  } else {
+    console.log("Validation failed. Please check your inputs.");
+  }
+});

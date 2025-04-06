@@ -195,6 +195,13 @@ textarea:focus {
   z-index: 100;
   align-items: center;
 }
+.createTask {
+  color: #fff;
+  width: 12rem;
+}
+.buttons--container {
+  grid-column: 2;
+}
 .option {
   padding: 10px;
   cursor: pointer;
