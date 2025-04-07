@@ -253,6 +253,7 @@ nav {
   align-items: center;
   justify-content: flex-start;
   gap: 15px;
+  cursor: pointer;
 }
 .check2 {
   width: 22px;

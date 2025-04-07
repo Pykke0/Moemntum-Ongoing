@@ -3,23 +3,7 @@ const department = document.querySelector(".dropdown--parent");
 const departementContainer = document.querySelector(".instance--parent");
 const dropdowns = document.querySelectorAll(".dropdown--parent");
 const allButtons = document.querySelectorAll(".btn--filter");
-
-document
-  .querySelector(".inner--container")
-  .addEventListener("click", function (e) {
-    e.preventDefault();
-    const clicked = e.target.closest(".btn");
-
-    if (!clicked) return;
-
-    const dataNumber = clicked.getAttribute("data-number");
-    const department = document.querySelector(
-      `.dropdown--parent[data-pressed="${dataNumber}"]`
-    );
-    clicked.classList.contains("active")
-      ? removeAllSelected()
-      : addAllSelected(clicked, department);
-  });
+let temp = false;
 
 // ==================== Functions ==================== //
 const removeAllSelected = () => {
@@ -114,11 +98,9 @@ const testFunc = async function () {
   }
 };
 
-document.getElementById("addEmployeeBtn").addEventListener("click", () => {
-  console.log(document.querySelector("name--input").value);
-  document.querySelector("lastname--input").value = "";
-  testFunc();
-});
+document
+  .getElementById("addEmployeeBtn")
+  .addEventListener("click", () => testFunc());
 
 setupInputValidation("name--input", "name--min", "name--max");
 setupInputValidation("lastname--input", "lastname--min", "lastname--max");
@@ -144,7 +126,7 @@ async function fetchData() {
     // Render departments
     departments.forEach((department) => {
       const HTML = `
-        <div class="check-parent">
+        <div class="check-parent" data-id="${department.id}">
           <div class="check btn">
             <img class="vector-icon" alt="" src="" />
           </div>
@@ -167,7 +149,11 @@ async function fetchData() {
     // Render tasks
     setTimeout(() => {
       tasks.forEach((task) => {
-        const HTML = `<button class="task--container btn" data-id="${task.id}">
+        const HTML = `<button class="task--container btn" data-id="${
+          task.id
+        }" data-department="${task.employee.department.id}" data-priority="${
+          task.priority.id
+        }" data-employee="${task.employee.id}">
         <div class="layer--1-container">
         <div class="layer--1-inner-container">
         <div class="importance--parent importance--${task.priority.id}">
@@ -213,7 +199,7 @@ async function fetchData() {
     // Render employees
     employees.forEach((person) => {
       const HTML = `
-        <div class="check-parent">
+        <div class="check-parent" data-id="${person.id}">
           <div class="check btn">
             <img class="vector-icon" alt="" src="" />
           </div>
@@ -246,7 +232,7 @@ async function fetchData() {
     // Render priorities
     priorities.forEach((prio) => {
       const HTML = `
-        <div class="check-parent">
+        <div class="check-parent" data-id="${prio.id}">
           <button class="check btn">
             <img class="vector-icon" alt="" src="" />
           </button>
@@ -273,114 +259,157 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
   });
-  document.querySelector(".btn--newWork").addEventListener("click", () => {
-    console.log("Redirecting to task creation page...");
-    window.location.href = "./taskCreation/task-creation.html";
+  document
+    .querySelector(".btn--newWork")
+    .addEventListener(
+      "click",
+      () => (window.location.href = "./taskCreation/task-creation.html")
+    );
+});
+document.addEventListener("DOMContentLoaded", () => {
+  const parent = document.querySelectorAll(".instance--parent");
+  parent.forEach((parent) => {
+    parent.addEventListener("click", function (e) {
+      const clickedParent = e.target.closest(".check-parent");
+      if (!clickedParent) return;
+
+      const vectorIcon = clickedParent.querySelector(".vector-icon");
+      const isChecked = vectorIcon.classList.contains("checked");
+
+      isChecked
+        ? vectorIcon.classList.remove("checked")
+        : vectorIcon.classList.add("checked");
+    });
   });
 });
 
 // ==================== Test ==================== //
 fetchData();
-window.addEventListener("DOMContentLoaded", () => {
-  const filteredAddons = [];
+document.addEventListener("DOMContentLoaded", () => {
+  const array_1 = [];
+  const array_2 = [];
+  const array_3 = [];
+  const arrays = {
+    1: array_1,
+    2: array_2,
+    3: array_3,
+  };
+  document
+    .querySelector(".inner--container")
+    .addEventListener("click", function (e) {
+      e.preventDefault();
+      const clicked = e.target.closest(".btn");
+      if (!clicked) return;
+      // console.log(clicked);
 
-  // STUPID PIECE OF SHIT CHECKING IF WE SHOULD FUCKING SORT IF OR NOT FUCK THIS SHIT MAN
-  document.addEventListener("click", function (event) {
-    if (event.target.type === "file") {
-      return;
-    }
-
-    event.preventDefault();
-
-    if (event.target.closest(".check")) {
-      const img = event.target.closest(".check").querySelector(".vector-icon");
-      img.classList.toggle("checked");
-
-      if (img.classList.contains("checked")) {
-        filteredAddons.push(
-          img.closest(".check-parent").querySelector(".button").outerHTML
-        );
-      } else {
-        console.log(img.closest(".check-parent").querySelector(".button"));
-
-        filteredAddons.splice(
-          filteredAddons.indexOf(
-            img.closest(".check-parent").querySelector(".button")
-          ),
-          1
-        );
-      }
-    }
+      const dataNumber = clicked.getAttribute("data-number");
+      const department = document.querySelector(
+        `.dropdown--parent[data-pressed="${dataNumber}"]`
+      );
+      clicked.classList.contains("active")
+        ? removeAllSelected()
+        : addAllSelected(clicked, department);
+    });
+  document.querySelectorAll(".button--wrapper").forEach((button) => {
+    button.addEventListener("click", function () {
+      const container = button.closest(".dropdown--parent");
+      const arrayKey = button.getAttribute("data-id");
+      const targetArray = arrays[arrayKey];
+      targetArray.length = 0;
+      container.querySelectorAll(".check-parent").forEach((element) => {
+        if (
+          element.querySelector(".vector-icon").classList.contains("checked")
+        ) {
+          const dataId = element.getAttribute("data-id");
+          targetArray.push(dataId);
+          // console.log(element.getAttribute("data-id"));
+        }
+      });
+      updateFiltering();
+      updatefilteringUI();
+      // console.log(array_1, array_2, array_3);
+    });
   });
 
-  const unCheckAll = function (e) {
-    document.querySelectorAll(".check").forEach((check) => {
-      check.classList.remove("checked");
+  const updateFiltering = function () {
+    document.querySelectorAll(".task--container").forEach((task) => {
+      const taskDepartmentId = task.getAttribute("data-department");
+      const taskPriorityId = task.getAttribute("data-priority");
+      const taskEmployeeId = task.getAttribute("data-employee");
+
+      const isDepartmentChecked =
+        array_1.length === 0 || array_1.includes(taskDepartmentId);
+      const isPriorityChecked =
+        array_2.length === 0 || array_2.includes(taskPriorityId);
+      const isEmployeeChecked =
+        array_3.length === 0 || array_3.includes(taskEmployeeId);
+
+      if (isDepartmentChecked && isPriorityChecked && isEmployeeChecked) {
+        task.style.display = "flex";
+      } else {
+        task.style.display = "none";
+      }
     });
   };
+  document.querySelector(".clear--button").addEventListener("click", () => {
+    document.querySelectorAll(".check").forEach((check) => {
+      check.classList.remove("checked");
+      array_1.length = 0;
+      array_2.length = 0;
+      array_3.length = 0;
+      this.style.display = "none";
+    });
+  });
+  const updatefilteringUI = function () {
+    const allOptions = document.querySelectorAll(".check-parent");
+    document
+      .querySelectorAll(".option--parent")
+      .forEach((option) => option.remove());
+    allOptions.forEach((option) => {
+      const vectorIcon = option.querySelector(".vector-icon");
+      const isChecked = vectorIcon.classList.contains("checked");
+      if (isChecked) {
+        const text = option.querySelector(".button").textContent;
+        const id = option.getAttribute("data-id");
 
-  // X button deletion
+        const HTML = `
+    <div class="option--parent" data-id="${id}">
+      <div>${text}</div>
+      <button class="btn x--button">
+        <img class="x--icon" alt="" src="./assets/icon-x.svg" />
+      </button>
+    </div>`;
+        document
+          .querySelector(".all--options")
+          .insertAdjacentHTML("beforeend", HTML);
+      }
+    });
+  };
   const deleteOptions = document.querySelector(".all--options");
   deleteOptions.addEventListener("click", function (event) {
     const button = event.target.closest(".x--button");
     if (button) {
-      unCheckAll();
-      button.closest(".option--parent").remove();
-      filteredAddons.splice(
-        filteredAddons.indexOf(
-          img.closest(".check-parent").querySelector(".button").textContent
-        ),
-        1
+      const option = button.closest(".option--parent");
+      const id = option.getAttribute("data-id");
+      const checkParent = document.querySelector(
+        `.check-parent[data-id="${id}"]`
       );
+      const vectorIcon = checkParent.querySelector(".vector-icon");
+
+      vectorIcon.classList.remove("checked");
+      option.remove();
+
+      const arrayKey = option.getAttribute("data-key");
+      const targetArray = arrays[arrayKey];
+      const index = targetArray.indexOf(id);
+      if (index !== -1) {
+        targetArray.splice(index, 1);
+      }
+      // updateFiltering();
+      // updatefilteringUI();
+      console.log(array_1, array_2, array_3);
     }
   });
-
-  document
-    .querySelector(".clear--button")
-    .addEventListener("click", function () {
-      document.querySelectorAll(".option--parent").forEach((option) => {
-        option.remove();
-      });
-      this.classList.add("display--none");
-      filteredAddons.length = 0;
-      document.querySelectorAll(".vector-icon").forEach((check) => {
-        check.classList.remove("checked");
-      });
-    });
-
-  // Filtering Yet again
-  document.addEventListener("click", function (event) {
-    if (event.target.classList.contains("btn--purple")) {
-      updateFiltering();
-    }
-  });
-
-  const updateFiltering = function () {
-    document.querySelectorAll(".option--parent").forEach((element) => {
-      element.remove();
-    });
-    filteredAddons.forEach((addon) => {
-      const HTML = `
-          <div class="option--parent">
-            <div>${addon}</div>
-            <button class="btn x--button">
-              <img class="x--icon" alt="" src="./assets/icon-x.svg" />
-            </button>
-          </div>`;
-      document
-        .querySelector(".all--options")
-        .insertAdjacentHTML("beforeend", HTML);
-    });
-
-    if (filteredAddons.length > 0) {
-      document
-        .querySelector(".clear--button")
-        .classList.remove("display--none");
-    } else {
-      document.querySelector(".clear--button").classList.add("display--none");
-    }
-  };
-
   // ============= MODAL MANIPULATION =============== //
   const modal = document.getElementById("myModal2");
   const openModalBtn = document.getElementById("openModalBtn2");
@@ -403,7 +432,6 @@ window.addEventListener("DOMContentLoaded", () => {
 
 const fileText = document.querySelector(".file-text");
 const filePreview = document.getElementById("filePreview");
-let temp = false;
 fileInput.addEventListener("change", function () {
   const file = fileInput.files[0];
   temp = true;
