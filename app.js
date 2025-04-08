@@ -297,7 +297,6 @@ document.addEventListener("DOMContentLoaded", () => {
   document
     .querySelector(".inner--container")
     .addEventListener("click", function (e) {
-      e.preventDefault();
       const clicked = e.target.closest(".btn");
       if (!clicked) return;
       // console.log(clicked);
@@ -344,72 +343,93 @@ document.addEventListener("DOMContentLoaded", () => {
       const isEmployeeChecked =
         array_3.length === 0 || array_3.includes(taskEmployeeId);
 
-      if (isDepartmentChecked && isPriorityChecked && isEmployeeChecked) {
-        task.style.display = "flex";
-      } else {
-        task.style.display = "none";
-      }
+      task.style.display =
+        isDepartmentChecked && isPriorityChecked && isEmployeeChecked
+          ? "flex"
+          : "none";
     });
   };
-  document.querySelector(".clear--button").addEventListener("click", () => {
-    document.querySelectorAll(".check").forEach((check) => {
-      check.classList.remove("checked");
+
+  const updatefilteringUI = function () {
+    const allOptionsContainer = document.querySelector(".all--options");
+    if (!allOptionsContainer) return;
+
+    // Clear existing options
+    allOptionsContainer.innerHTML = "";
+
+    // Add clear button visibility logic
+    const clearButton = document.querySelector(".clear--button");
+    let hasAnyOptions = false;
+
+    // Rebuild options
+    document.querySelectorAll(".check-parent").forEach((option) => {
+      const vectorIcon = option.querySelector(".vector-icon");
+      if (vectorIcon && vectorIcon.classList.contains("checked")) {
+        hasAnyOptions = true;
+        const text = option.querySelector(".button")?.textContent || "";
+        const id = option.getAttribute("data-id");
+        const arrayId = option
+          .closest(".dropdown--parent")
+          ?.getAttribute("data-pressed");
+
+        if (id && arrayId) {
+          const HTML = `
+            <div class="option--parent" data-id="${id}" data-array="${arrayId}">
+              <div>${text}</div>
+              <button class="btn x--button">
+                <img class="x--icon" alt="" src="./assets/icon-x.svg" />
+              </button>
+            </div>`;
+          allOptionsContainer.insertAdjacentHTML("beforeend", HTML);
+        }
+      }
+    });
+
+    // Update clear button visibility
+    if (clearButton) {
+      clearButton.style.display = hasAnyOptions ? "block" : "none";
+    }
+  };
+
+  document
+    .querySelector(".clear--button")
+    .addEventListener("click", function () {
+      document
+        .querySelectorAll(".check")
+        .forEach((check) => check.classList.remove("checked"));
       array_1.length = 0;
       array_2.length = 0;
       array_3.length = 0;
+      updateFiltering();
+      updatefilteringUI();
       this.style.display = "none";
     });
-  });
-  const updatefilteringUI = function () {
-    const allOptions = document.querySelectorAll(".check-parent");
-    document
-      .querySelectorAll(".option--parent")
-      .forEach((option) => option.remove());
-    allOptions.forEach((option) => {
-      const vectorIcon = option.querySelector(".vector-icon");
-      const isChecked = vectorIcon.classList.contains("checked");
-      if (isChecked) {
-        const text = option.querySelector(".button").textContent;
-        const id = option.getAttribute("data-id");
 
-        const HTML = `
-    <div class="option--parent" data-id="${id}">
-      <div>${text}</div>
-      <button class="btn x--button">
-        <img class="x--icon" alt="" src="./assets/icon-x.svg" />
-      </button>
-    </div>`;
-        document
-          .querySelector(".all--options")
-          .insertAdjacentHTML("beforeend", HTML);
-      }
-    });
-  };
   const deleteOptions = document.querySelector(".all--options");
   deleteOptions.addEventListener("click", function (event) {
     const button = event.target.closest(".x--button");
     if (button) {
       const option = button.closest(".option--parent");
       const id = option.getAttribute("data-id");
+      const arrayKey = option.getAttribute("data-array");
+      const targetArray = arrays[arrayKey];
+
+      const index = targetArray.indexOf(id);
+      if (index !== -1) targetArray.splice(index, 1);
+
       const checkParent = document.querySelector(
         `.check-parent[data-id="${id}"]`
       );
       const vectorIcon = checkParent.querySelector(".vector-icon");
-
       vectorIcon.classList.remove("checked");
-      option.remove();
+      console.log(option);
 
-      const arrayKey = option.getAttribute("data-key");
-      const targetArray = arrays[arrayKey];
-      const index = targetArray.indexOf(id);
-      if (index !== -1) {
-        targetArray.splice(index, 1);
-      }
-      // updateFiltering();
-      // updatefilteringUI();
-      console.log(array_1, array_2, array_3);
+      updateFiltering();
+      updatefilteringUI();
+      option.remove();
     }
   });
+
   // ============= MODAL MANIPULATION =============== //
   const modal = document.getElementById("myModal2");
   const openModalBtn = document.getElementById("openModalBtn2");
