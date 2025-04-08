@@ -230,17 +230,20 @@ async function fetchData() {
     });
 
     // Render priorities
+    // In your fetchData function, modify the priorities rendering:
     priorities.forEach((prio) => {
       const HTML = `
-        <div class="check-parent" data-id="${prio.id}">
-          <button class="check btn">
-            <img class="vector-icon" alt="" src="" />
-          </button>
-          <div class="frame-wrapper">
-            <div class="button">${prio.name}</div>
-          </div>
-        </div>`;
-      document.querySelector(".priority").insertAdjacentHTML("beforeend", HTML);
+    <div class="check-parent" data-id="${prio.id}">
+      <div class="check btn">  <!-- Make sure this matches other sections -->
+        <img class="vector-icon" alt="" src="" />
+      </div>
+      <div class="frame-wrapper">
+        <div class="button">${prio.name}</div>
+      </div>
+    </div>`;
+      document
+        .querySelector(`.dropdown--parent[data-pressed="2"] .instance--parent`)
+        .insertAdjacentHTML("beforeend", HTML);
     });
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -408,26 +411,35 @@ document.addEventListener("DOMContentLoaded", () => {
   const deleteOptions = document.querySelector(".all--options");
   deleteOptions.addEventListener("click", function (event) {
     const button = event.target.closest(".x--button");
-    if (button) {
-      const option = button.closest(".option--parent");
-      const id = option.getAttribute("data-id");
-      const arrayKey = option.getAttribute("data-array");
-      const targetArray = arrays[arrayKey];
+    if (!button) return;
 
-      const index = targetArray.indexOf(id);
-      if (index !== -1) targetArray.splice(index, 1);
+    const option = button.closest(".option--parent");
+    if (!option) return;
 
-      const checkParent = document.querySelector(
-        `.check-parent[data-id="${id}"]`
+    const id = option.getAttribute("data-id");
+    const arrayKey = option.getAttribute("data-array");
+    const targetArray = arrays[arrayKey];
+
+    const index = targetArray.indexOf(id);
+    if (index !== -1) targetArray.splice(index, 1);
+
+    let checkParent;
+    if (arrayKey === "2") {
+      checkParent = document.querySelector(
+        `.dropdown--parent[data-pressed="2"] .check-parent[data-id="${id}"]`
       );
-      const vectorIcon = checkParent.querySelector(".vector-icon");
-      vectorIcon.classList.remove("checked");
-      console.log(option);
-
-      updateFiltering();
-      updatefilteringUI();
-      option.remove();
+    } else {
+      checkParent = document.querySelector(`.check-parent[data-id="${id}"]`);
     }
+
+    if (checkParent) {
+      const vectorIcon = checkParent.querySelector(".vector-icon");
+      if (vectorIcon) vectorIcon.classList.remove("checked");
+    }
+
+    option.remove();
+    updateFiltering();
+    updatefilteringUI();
   });
 
   // ============= MODAL MANIPULATION =============== //
